@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header>
+        <span class="triangle-code"></span>
+
+        <p class="titre">CONSOMMATION ELECTRIQUE</p>
+        <span class="triangleDeux-code"></span>
+    </header>
+    <div class="containerDiv">
+
+        <div class="contenu1">
+
+            <P class="parTitre">INFORMATIONS APPAREIL</P>
+
+            <!-- <form id="form"> -->
+            <label for="power">Puissance de l'appareil en Watt</label>
+            <input type="number" name="power" id="power">
+            <br>
+            <label for="time">Durée d'utilisation en heures</label>
+            <input type="number" name="time" id="time">
+            <br>
+            <label for="nbJour">Nombre de jours d'utilisation</label>
+            <input type="number" name="nbJour" id="nbJour">
+            <br>
+            <label for="prix">Prix du kwh</label>
+            <input type="number" name="prix" id="prix" step="0.0001">
+            <br>
+            <!-- <input id="valider" type="submit" value="Valider"> -->
+            <button id="bouton">Valider</button>
+            <!-- </form> -->
+        </div>
+        <div class="contenu2">
+
+        </div>
+    </div>
+    <script>
+        document.querySelector(".contenu2").innerText =
+            "Veuillez saisir les valeurs pour un appareil";
+
+        document.querySelector('#bouton').addEventListener("click", (event) => {
+            event.preventDefault();
+            console.log("ok");
+
+
+            power = document.querySelector("#power").value;
+            time = document.querySelector("#time").value;
+            nbJour = document.querySelector("#nbJour").value;
+            prix = document.querySelector("#prix").value;
+            console.log(power, time, nbJour, prix);
+            resetFields();
+
+            if (!power || !time || !nbJour || !prix) {
+                document.querySelector(".contenu2").innerHTML =
+                    "Veuillez saisir les valeurs pour un appareil";
+
+            } else {
+                document.querySelector('.contenu2').innerHTML = conso(power, time, nbJour, prix);
+            }
+        });
+
+        function conso(a, b, c, d) {
+            const consumption = (a * b * c) / 1000;
+            const prixConso = consumption * d;
+            const prixConsoMois = prixConso / 12;
+            const prixFormat = prixConso.toFixed(2).toString().replace(".", ",");
+            const result = `Puissance de l'appareil : ${a}W <br>Durée de l'utilisation : ${b}h <br>Nombre jours d'utilisation : ${c} <br>Consommation électrique : ${consumption} kWh.<br> Prix du kwh : ${d} €. <br><br>Prix conso pour ${c} jours : ${prixFormat} €.`;
+            return result;
+        };
+
+        function resetFields() {
+            document.getElementById('power').value = "";
+            document.getElementById('time').value = "";
+            document.getElementById('nbJour').value = "";
+            document.getElementById('prix').value = "";
+            console.log("les valeurs ont été supprimées");
+        };
+    </script>
+</body>
+
+</html>
